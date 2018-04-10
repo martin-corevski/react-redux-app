@@ -1,38 +1,43 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import axios from 'axios'
-import { createStore } from 'redux'
+import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 
 import './index.scss'
 import App from './containers/App'
-import reducer from './store/reducer'
+// For single reducer
+// import reducer from './store/reducer'
+// With multiple reducers
+import reducer1 from './store/reducers/reducer1'
+import reducer2 from './store/reducers/reducer2'
 
-// Set up axios default configuration
-axios.defaults.baseURL = 'https://jsonplaceholder.typicode.com'
-
-// https://github.com/axios/axios#interceptors
-axios.interceptors.request.use(request => {
-  console.log('axios interceptors request: ', request)
-  // Edit request config
-  return request
-}, error => {
-  // request error handling, like loss of internet connection, server problems..
-  console.log('axios interceptors error: ', error)
-  return Promise.reject(error)
+// Combining multiple reducers
+const rootReducer = combineReducers({
+  r1: reducer1,
+  r2d2: reducer2
 })
 
-axios.interceptors.response.use(response => {
-  console.log('axios interceptors response: ', response)
-  // Edit response config
-  return response
-}, error => {
-  // request error handling, like loss of internet connection, server problems..
-  console.log('axios interceptors error: ', error)
-  return Promise.reject(error)
-})
+// Custom middleware for logging the dispatched actions and current state
+const logger = store => {
+  return next => {
+    return action => {
+      console.log('[Middleware] Dispatching ', action)
+      const result = next(action)
+      console.log('[Middleware] Next state ', store.getState())
+      return result
+    }
+  }
+}
 
-const store = createStore(reducer)
+// For Chrome Dev tools, https://github.com/zalmoxisus/redux-devtools-extension
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+
+// For single reducer store
+// const store = createStore(reducer)
+// Multiple reducers store and as a second argument we can pass the so called
+// enhancer (the middleware or multiple middlewares)
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)))
 
 ReactDOM.render(
   <Provider store={store}>
