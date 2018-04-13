@@ -30,8 +30,10 @@ const logger = store => {
   }
 }
 
+// For dotenv-webpack plugin test purposes
+console.log('TEST_ENV_DEV: ', process.env.TEST_ENV_DEV)
 // For Chrome Dev tools, https://github.com/zalmoxisus/redux-devtools-extension
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose
 
 // For single reducer store
 // const store = createStore(reducer, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
