@@ -55,6 +55,9 @@ class App extends Component {
   render () {
     console.log('[App.js] render')
 
+    // Uncomment for npm run test
+    // return <h1>Dummy test!</h1>
+
     return (
       <BrowserRouter>
         <Route path='/' exact component={ReduxReady} />
