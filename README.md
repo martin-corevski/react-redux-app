@@ -35,11 +35,15 @@ npm run build:prod
 ```
 - For development server
 ```
-npm run start
+npm start
 ```
 - For Webpack watch
 ```
 npm run watch
+```
+- For testing with jest
+```
+npm run test
 ```
 ---
 License
