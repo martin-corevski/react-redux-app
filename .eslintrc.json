@@ -19,6 +19,7 @@
     "quotes": ["error", "single"],
     "semi": ["error", "never"],
     "space-before-function-paren": ["error", "always"],
-    "jsx-quotes": ["error", "prefer-single"]
+    "jsx-quotes": ["error", "prefer-single"],
+    "generator-star-spacing": ["error", { "before": true, "after": true }]
   }
 }
