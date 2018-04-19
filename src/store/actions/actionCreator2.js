@@ -7,14 +7,19 @@ export const action2Leaner = value => {
   // reducer. Example:
   // value *= 2
   return {
-    type: actionTypes.ACTION_2,
+    type: actionTypes.ACTION_2_LEAN,
     num: value
   }
 }
 
-export const action2 = (value) => {
+export const action2 = value => {
   // Async actions made available by redux-thunk
-  return (dispatch, getState) => {
-    setTimeout(() => { dispatch(action2Leaner(value)) }, 2000)
+  // return (dispatch, getState) => {
+  //   setTimeout(() => { dispatch(action2Leaner(value)) }, 2000)
+  // }
+  // Now with Redux Saga
+  return {
+    type: actionTypes.ACTION_2,
+    value
   }
 }

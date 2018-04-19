@@ -9,13 +9,12 @@ const initialState = {
 // In order to have even leaner switch cases we can create functions that take
 // care of the state update
 const addNumber = (state, action) => {
-  const number = action.num * 2
-  return updateObject(state, {numbers: state.numbers.concat(number)})
+  return updateObject(state, { numbers: state.numbers.concat(action.num) })
 }
 
 const reducer2 = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ACTION_2:
+    case actionTypes.ACTION_2_LEAN:
       return addNumber(state, action)
     default:
       return state
