@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 const occurrenceOrderPlugin = new webpack.optimize.OccurrenceOrderPlugin()
 const hotModuleReplacementPlugin = new webpack.HotModuleReplacementPlugin()
@@ -32,6 +33,9 @@ const extractTextPlugin = new ExtractTextPlugin({
    * @type {String}
    */
   filename: 'css/index.css'
+})
+const copyWebpackPlugin = new CopyWebpackPlugin([{ from: '../favicon.ico' }], {
+  copyUnmodified: true
 })
 
 module.exports = env => {
@@ -88,7 +92,7 @@ module.exports = env => {
        * webpack-dev-server.
        * @type {Number}
        */
-      port: 8889,
+      port: 8895,
       /**
        * We can control what bundle information is displayed. To show only errors
        * more info on stats options https://webpack.js.org/configuration/stats
@@ -339,7 +343,12 @@ module.exports = env => {
         new Dotenv({
           path: '.env.dev',
           systemvars: true
-        })
+        }),
+        /**
+           * Copy static files such as favicon.ico.
+           * @type {Object}
+           */
+        copyWebpackPlugin
       ]
       : [
         /**
@@ -362,7 +371,8 @@ module.exports = env => {
         new Dotenv({
           path: '.env.prod',
           systemvars: true
-        })
+        }),
+        copyWebpackPlugin
       ]
   }
 }
